@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机句子</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    body {
+      position: relative; /* 添加定位属性 */
+      background-image: url("https://tuapi.eees.cc/api.php?category=dongman&type=302"); /* 设置背景图像 */
+      background-repeat: no-repeat; /* 设置背景图像不重复 */
+      background-size: cover; /* 设置背景图像自适应尺寸 */
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>随机句子</h1>
+    <div class="sentence-container">
+      <p id="sentence-text">点击下方按钮生成一条随机句子</p>
+    </div>
+    <br><br><br>
+    <button id="generate-btn" onclick="generateSentence()">生成句子</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
