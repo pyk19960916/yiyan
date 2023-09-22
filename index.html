@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +14,11 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
+      background-image: url('http://www.98qy.com/sjbz/api.php');
+      background-size: cover;
+      background-position: center;
     }
-    
+
     #title {
       position: absolute;
       top: 10px;
@@ -23,36 +26,44 @@
       color: white;
       font-size: 18px;
     }
-    
+
     #quote-container {
       text-align: center;
-      background-color: rgba(255,255,255,0.72);
+      background-color: rgba(255, 255, 255, 0.8);
       padding: 20px;
       border-radius: 10px;
-      max-width: 90%;
     }
-    
+
     #quote {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       font-size: 18px;
       word-wrap: break-word;
     }
-    
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
     .btn {
-      padding: 10px 20px;
+      padding: 10px;
       border-radius: 5px;
       cursor: pointer;
       background-color: #42b983;
       color: #fff;
       font-size: 14px;
       border: none;
-      margin-top: 10px;
+      width: 120px;
     }
 
-    /* 响应式设计 */
     @media only screen and (max-width: 480px) {
       #quote-container {
         max-width: 80%;
+      }
+      .btn {
+        font-size: 14px;
+        width: 100px;
       }
     }
   </style>
@@ -61,14 +72,16 @@
   <div id="title">文案馆</div>
   <div id="quote-container">
     <div id="quote">点击按钮获取一言...</div>
-    <button id="copy-btn" class="btn">复制</button>
-    <button id="next-btn" class="btn">下一个</button>
-    <button id="change-bg-btn" class="btn">切换背景</button>
+    <div class="btn-container">
+      <button id="copy-btn" class="btn">复制</button>
+      <button id="next-btn" class="btn">下一个</button>
+      <button id="redirect-btn" class="btn">网站导航</button>
+    </div>
   </div>
 
   <script>
-    // 一言列表
     const quotes = [
+
     "半窗疏影，一梦千年，琴歌萧萧笛声怜。",
 "希望你有问题第一时间是思考，然后是在群公告群文件或者百度寻找答案，而不是张口就问。",
 "良辰美景奈何天，赏心乐事听勾栏",
@@ -158,17 +171,17 @@
     const quoteElement = document.getElementById("quote");
     const copyBtn = document.getElementById("copy-btn");
     const nextBtn = document.getElementById("next-btn");
-    const changeBgBtn = document.getElementById("change-bg-btn");
+    const redirectBtn = document.getElementById("redirect-btn");
 
     copyBtn.addEventListener("click", copyQuote);
     nextBtn.addEventListener("click", getRandomQuote);
-    changeBgBtn.addEventListener("click", changeBackground);
+    redirectBtn.addEventListener("click", redirectPage);
 
     function copyQuote() {
       const quoteText = quoteElement.textContent;
       navigator.clipboard.writeText(quoteText)
         .then(() => {
-          alert("内容已复制到剪贴板！");
+          alert("已复制到剪贴板！");
         })
         .catch((error) => {
           console.error(error);
@@ -180,9 +193,8 @@
       quoteElement.textContent = quotes[randomIndex];
     }
 
-    function changeBackground() {
-      const randomNumber = Math.floor(Math.random() * 10) + 1;
-      document.body.style.backgroundImage = `url('https://api.btstu.cn/sjbz/api.php')`;
+    function redirectPage() {
+      window.location.href = "http://xiaobaoxia.com/daohang.html"; // 修改为跳转页面的 URL
     }
   </script>
 </body>
