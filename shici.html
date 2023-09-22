@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>诗词馆</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('http://www.98qy.com/sjbz/api.php');
+      background-size: cover;
+      background-position: center;
+    }
+
+    #title {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 18px;
+    }
+
+    #quote-container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    #quote {
+      margin-bottom: 30px;
+      font-size: 18px;
+      word-wrap: break-word;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .btn {
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #42b983;
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      width: 120px;
+    }
+
+    @media only screen and (max-width: 480px) {
+      #quote-container {
+        max-width: 80%;
+      }
+      .btn {
+        font-size: 14px;
+        width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="title">诗词馆</div>
+  <div id="quote-container">
+    <div id="quote">点击按钮获取诗词...</div>
+    <div class="btn-container">
+      <button id="copy-btn" class="btn">复制</button>
+      <button id="next-btn" class="btn">下一个</button>
+      <button id="redirect-btn" class="btn">网站导航</button>
+    </div>
+  </div>
+  <!-- "内容", -->
+  <script>
+    const quotes = [
+    "行到水穷处，坐看云起时。",
+    "愿你把酒持剑，归来仍是少年",
+    "衣带渐宽终不悔，为伊消得人憔悴。",
+    "休对故人思故国，且将新火试新茶",
+    "生如夏花之绚烂，死如秋叶之静美。",
+    "春色满园关不住，一枝红杏出墙来。",
+    "问君何能尔,心远地自偏。",
+    "天地有正气，杂然赋流形。",
+    "执子之手，与子偕老。",
+    "业精于勤，荒于嬉；行成于思，毁于惰。",
+    "待到秋来九月八，我花开后百花杀",
+    "梦里不知身是客，一晌贪欢。",
+    "且将新火试新茶，诗酒趁年华。",
+    "夜深忽梦少年事，梦啼妆泪红阑干。",
+    "应是天仙狂醉,乱把白云揉碎。",
+    "满堂花醉三千客，一剑霜寒十四州",
+    "东隅已逝，桑榆非晚",
+    "相顾无言，惟有泪千行。",
+    "春潮带雨晚来急，野渡无人舟自横。",
+    "人生自古谁无死，留取丹心照汗青",
+    "莫道不销魂 帘卷西风 人比黄花瘦",
+    "仍怜故乡水，万里送行舟。",
+    "枯藤老树昏鸦，小桥流水人家，古道西风瘦马。夕阳西下，断肠人在天涯",
+    "不知细叶谁裁出，二月春风似剪刀",
+    "千古兴亡多少事，悠悠。不尽长江滚滚流。",
+    "峨眉山月半轮秋，影入平羌江水流",
+    "婉拒花香语，笑纳玄成意。",
+    "大漠孤烟直，长河落日圆。",
+    "野火烧不尽，春风吹又生。",
+    "莫等闲，白了少年头，空悲切！",
+"一半烟火以谋生，一半诗意以谋爱",
+"天若有情天亦老，人间正道是沧桑",
+"醉里挑灯看剑，梦里花海如潮。",
+"人间烟火气，最抚凡人心",
+"星空不问赶路人，岁月不负有心人。",
+"二两桃花酿作酒，万杯不及你温柔。",
+"本是青灯不归客，却因浊酒恋红尘。",
+"三里清风三里路，步步清风再无你。",
+"有茶有酒多兄弟，患难何曾见一人。",
+"万丈悬崖终有底，唯有人心不可测。",
+"一生负气成今日，四海无人对夕阳。",
+"一世浮生一刹那，一程山水一年华。",
+"大鹏一日同风起，扶摇直上九万里。",
+"缘来缘去终会散，花开花败踪归程",
+"半生风雨半生寒，一杯浊酒敬流年",
+"我见青山多妩媚，青山见我应如是",
+"从此烟雨落金城，一人撑伞两人行。",
+"三生清风三里路，步步春风再无你。",
+"无人与我立黄昏，无人问我粥可温",
+"我与春风皆过客，你携秋水揽星河。",
+"既许一人以偏爱，愿尽余生之慷慨。",
+"半身风雨半身伤，半句别恨半句凉",
+"从此音尘各悄然，春风如带草如烟。"
+    ];
+
+    const quoteElement = document.getElementById("quote");
+    const copyBtn = document.getElementById("copy-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const redirectBtn = document.getElementById("redirect-btn");
+
+    copyBtn.addEventListener("click", copyQuote);
+    nextBtn.addEventListener("click", getRandomQuote);
+    redirectBtn.addEventListener("click", redirectPage);
+
+    function copyQuote() {
+      const quoteText = quoteElement.textContent;
+      navigator.clipboard.writeText(quoteText)
+        .then(() => {
+          alert("已复制到剪贴板！");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    function getRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      quoteElement.textContent = quotes[randomIndex];
+    }
+
+    function redirectPage() {
+      window.location.href = "http://xiaobaoxia.com/daohang.html"; // 修改为跳转页面的 URL
+    }
+  </script>
+</body>
+</html>
